@@ -97,6 +97,18 @@ class Retriever:
             )
             documents = text_splitter.split_documents(raw_documents)
             all_documents.extend(documents)
+        for loader in logloader:
+            print("Loading", loader)
+            raw_documents = loader.load()
+            # split the documents into smaller chunks
+            text_splitter = CharacterTextSplitter(
+                separator="\n",
+                chunk_size=800,
+                chunk_overlap=100,
+                length_function=len,
+            )
+            documents = text_splitter.split_documents(raw_documents)
+            all_documents.extend(documents)
         '''
         for loader in logloader:
             print("Loading", loader)
